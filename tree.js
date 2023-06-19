@@ -7,13 +7,14 @@ export default class Tree {
   }
 
   sortArray(arr) {
-    // Removes duplicate values
+    // Remove duplicate values
     const array = [...new Set(arr)];
-    // Sorts array in ascending order
+    // Sort array in ascending order
     array.sort((a, b) => a - b);
     return array;
   }
 
+  // Take array of data and turn it into a balanced binary tree full of Node objects
   buildTree(currentArray = this.arr) {
     const arr = [...currentArray];
     // console.log(arr);
@@ -26,6 +27,7 @@ export default class Tree {
     return node;
   }
 
+  // Create a visual tree in a structured format
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
@@ -41,5 +43,22 @@ export default class Tree {
     if (node.left !== null) {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
+  }
+
+  // Insert value into tree
+  insert(node, data) {
+    if (node === null) {
+      return new Node(data);
+    }
+
+    if (data === node.data) {
+      return node;
+    } else if (data < node.data) {
+      node.left = this.insert(node.left, data);
+    } else if (data > node.data) {
+      node.right = this.insert(node.right, data);
+    }
+
+    return node;
   }
 }
