@@ -1,0 +1,21 @@
+{
+  "name": "binary-search-trees",
+  "version": "1.0.0",
+  "description": "binary search trees",
+  "main": "node.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristenmazza/binary-search-trees.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kristenmazza/binary-search-trees/issues"
+  },
+  "homepage": "https://github.com/kristenmazza/binary-search-trees#readme",
+  "type": "module"
+}
