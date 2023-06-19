@@ -61,4 +61,70 @@ export default class Tree {
 
     return node;
   }
+
+  // Inorder traversal of BST
+  inorder(root) {
+    if (root !== null) {
+      this.inorder(root.left);
+      console.log(root.data);
+      this.inorder(root.right);
+    }
+  }
+
+  // Delete node from tree
+  delete(root, k) {
+    if (root === null) {
+      return root;
+    }
+
+    // Recursive calls for the ancestors of the node to be deleted
+    if (root.data > k) {
+      root.left = this.delete(root.left, k);
+      return root;
+    } else if (root.data < k) {
+      root.right = this.delete(root.right, k);
+      return root;
+    }
+
+    // Reaches here when root is the node to be deleted
+
+    // If root has no children, delete the root
+    if (root.left === null && root.right === null) {
+      root = null;
+      return root;
+    }
+
+    // If one of the children is empty, replace root with existing child
+    else if (root.left === null) {
+      root = root.right;
+      return root;
+    } else if (root.right === null) {
+      root = root.left;
+      return root;
+    }
+
+    // If both children exist, find the successor, which will be the smallest
+    // value (furthest left) in the right subtree of the root node to be deleted
+    else {
+      let successorParent = root;
+      let successor = root.right;
+
+      while (successor.left !== null) {
+        successorParent = successor;
+        successor = successor.left;
+      }
+
+      // Delete the successor
+      if (successorParent !== root) {
+        successorParent.left = successor.right;
+      } else {
+        successorParent.right = successor.right;
+      }
+
+      // Copy successor data to root
+      root.data = successor.data;
+      successor = null;
+      return root;
+    }
+  }
 }

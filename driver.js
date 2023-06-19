@@ -8,3 +8,6 @@ tree.prettyPrint(root);
 
 tree.insert(root, 10);
 tree.prettyPrint(root);
+
+tree.delete(root, 67);
+tree.prettyPrint(root);
