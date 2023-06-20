@@ -131,7 +131,7 @@ export default class Tree {
   }
 
   externalFunction(node) {
-    console.log(node);
+    return node.data * node.data;
   }
 
   // levelOrder traverses tree in breadth-first level order and provides each
@@ -154,57 +154,65 @@ export default class Tree {
       // Store and remove first node from the queue
       let shiftedNode = q.shift();
 
-      // Provide each node as an argument to the provided function, if it exists
-      if (callback) callback(shiftedNode);
-
-      // Push each node's value into a level order array
-      levelOrderArray.push(shiftedNode.data);
+      // Provide each node as an argument to the provided function, if it exists.
+      if (callback) {
+        levelOrderArray.push(callback(shiftedNode));
+      } else {
+        levelOrderArray.push(shiftedNode.data);
+      }
     }
-    if (!callback) {
-      return levelOrderArray;
-    }
+    return levelOrderArray;
   }
 
   // Inorder traversal of BST: <left><root><right>
-  // Accepts a function as a parameter.Returns array if no function is given.
+  // Accepts a function as a parameter. Returns array if no function is given.
   inorder(callback, root = this.root, inorderArray = []) {
     if (root === null) return;
 
     this.inorder(callback, root.left, inorderArray);
 
-    if (callback) callback(root);
-    inorderArray.push(root.data);
+    if (callback) {
+      inorderArray.push(callback(root));
+    } else {
+      inorderArray.push(root.data);
+    }
 
     this.inorder(callback, root.right, inorderArray);
 
-    if (!callback) return inorderArray;
+    return inorderArray;
   }
 
   // Preorder traversal of BST: <root><left><right>
-  // Accepts a function as a parameter.Returns array if no function is given.
+  // Accepts a function as a parameter. Returns array if no function is given.
   preorder(callback, root = this.root, preorderArray = []) {
     if (root === null) return;
 
-    if (callback) callback(root);
-    preorderArray.push(root.data);
+    if (callback) {
+      preorderArray.push(callback(root));
+    } else {
+      preorderArray.push(root.data);
+    }
 
     this.preorder(callback, root.left, preorderArray);
     this.preorder(callback, root.right, preorderArray);
 
-    if (!callback) return preorderArray;
+    return preorderArray;
   }
 
   // Postorder traversal of BST: <left><right><root>
-  // Accepts a function as a parameter.Returns array if no function is given.
+  // Accepts a function as a parameter. Returns array if no function is given.
   postorder(callback, root = this.root, postorderArray = []) {
     if (root === null) return;
 
     this.postorder(callback, root.left, postorderArray);
     this.postorder(callback, root.right, postorderArray);
 
-    if (callback) callback(root);
-    postorderArray.push(root.data);
+    if (callback) {
+      postorderArray.push(callback(root));
+    } else {
+      postorderArray.push(root.data);
+    }
 
-    if (!callback) return postorderArray;
+    return postorderArray;
   }
 }
