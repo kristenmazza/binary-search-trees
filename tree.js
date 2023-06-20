@@ -126,6 +126,7 @@ export default class Tree {
     }
   }
 
+  // Find value in BST and return node
   find(value, root = this.root) {
     if (root === null || root.data === value) {
       return root;
@@ -135,6 +136,41 @@ export default class Tree {
       return this.find(value, root.right);
     } else if (root.data > value) {
       return this.find(value, root.left);
+    }
+  }
+
+  externalFunction(node) {
+    console.log(node);
+  }
+
+  // levelOrder traverses tree in breadth-first level order and provides each
+  // node as the argument to the provided function. Returns array of values if
+  // no function is given.
+  levelOrder(callback, root = this.root) {
+    if (root === null) return;
+    let q = [];
+    q.push(root);
+    let levelOrderArray = [];
+
+    // While the queue array is not empty
+    while (q.length > 0) {
+      let current = q[0];
+
+      // If a left node exists and a right node exixts, push those nodes into the queue
+      if (current.left) q.push(current.left);
+      if (current.right) q.push(current.right);
+
+      // Store and remove first node from the queue
+      let shiftedNode = q.shift();
+
+      // Provide each node as an argument to the provided function, if it exists
+      if (callback) callback(shiftedNode);
+
+      // Push each node's value into a level order array
+      levelOrderArray.push(shiftedNode.data);
+    }
+    if (!callback) {
+      return levelOrderArray;
     }
   }
 }
