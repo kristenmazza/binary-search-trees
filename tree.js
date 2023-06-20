@@ -219,6 +219,7 @@ export default class Tree {
   // Accepts node and returns its depth (number of edges in path from given node to tree's root node)
   depth(node, root = this.root) {
     let depth = 0;
+    let value;
     let q = [];
     q.push(root);
     q.push(null);
@@ -244,9 +245,16 @@ export default class Tree {
 
       // If the element data is the same as the passed in node value, break from the loop
       if (temp !== null && temp.data === node) {
+        value = true;
         break;
+      } else if ((temp !== null && temp.data) !== node) {
+        value = false;
       }
     }
-    return depth;
+    if (value === false) {
+      return null;
+    } else {
+      return depth;
+    }
   }
 }
