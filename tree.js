@@ -215,4 +215,38 @@ export default class Tree {
 
     return postorderArray;
   }
+
+  // Accepts node and returns its depth (number of edges in path from given node to tree's root node)
+  depth(node, root = this.root) {
+    let depth = 0;
+    let q = [];
+    q.push(root);
+    q.push(null);
+
+    // While the queue array is not empty
+    while (q.length > 0) {
+      // Store first element from queue and remove it from array
+      let temp = q.shift();
+
+      // If the element is null, increment the depth, and if the queue is not empty, push null onto the end of the queue.
+      // This adds null after every level, allowing us to track the depth based on how many nulls are encountered.
+      if (temp === null) {
+        depth += 1;
+        if (q.length > 0) {
+          q.push(null);
+        }
+      }
+      // If left and right nodes exist, push them into the queue
+      else {
+        if (temp.left) q.push(temp.left);
+        if (temp.right) q.push(temp.right);
+      }
+
+      // If the element data is the same as the passed in node value, break from the loop
+      if (temp !== null && temp.data === node) {
+        break;
+      }
+    }
+    return depth;
+  }
 }
