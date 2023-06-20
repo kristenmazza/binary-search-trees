@@ -2,61 +2,59 @@ import Node from "./node.js";
 
 export default class Tree {
   constructor(arr) {
-    this.arr = this.sortArray(arr);
     this.root = this.buildTree(arr);
   }
 
-  sortArray(arr) {
-    // Remove duplicate values
-    const array = [...new Set(arr)];
-    // Sort array in ascending order
-    array.sort((a, b) => a - b);
-    return array;
+  // Build tree using sorted, unique values array
+  buildTree(arr) {
+    const uniqueArray = this.removeDuplicates(arr);
+    const sortedArray = this.sortArray(uniqueArray);
+    const root = this.sortedArrayToBST(sortedArray, 0, sortedArray.length - 1);
+    return root;
   }
 
-  // Take array of data and turn it into a balanced binary tree full of Node objects
-  buildTree(currentArray = this.arr) {
-    const arr = [...currentArray];
-    // console.log(arr);
-    if (arr.length === 0) return null;
+  // Remove array duplicates
+  removeDuplicates(arr) {
+    const uniqueValues = [...new Set(arr)];
+    return uniqueValues;
+  }
 
-    const mid = Math.floor(arr.length / 2);
+  // Sort array in ascending order
+  sortArray(arr) {
+    const sorted = arr.sort((a, b) => a - b);
+    return sorted;
+  }
+
+  // Turn sorted array into binary search tree
+  sortedArrayToBST(arr, start, end) {
+    if (start > end) {
+      return null;
+    }
+
+    // Make middle element the root
+    const mid = parseInt((start + end) / 2);
     const node = new Node(arr[mid]);
-    node.left = this.buildTree(arr.slice(0, mid));
-    node.right = this.buildTree(arr.slice(mid + 1, arr.length));
+
+    // Recursively construct left and right subtrees
+    node.left = this.sortedArrayToBST(arr, start, mid - 1);
+    node.right = this.sortedArrayToBST(arr, mid + 1, end);
+
     return node;
   }
 
-  // Create a visual tree in a structured format
-  prettyPrint(node, prefix = "", isLeft = true) {
-    if (node === null) {
-      return;
-    }
-    if (node.right !== null) {
-      this.prettyPrint(
-        node.right,
-        `${prefix}${isLeft ? "│   " : "    "}`,
-        false
-      );
-    }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-    if (node.left !== null) {
-      this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-    }
-  }
-
   // Insert value into tree
-  insert(node, data) {
+  insert(data, node = this.root) {
     if (node === null) {
-      return new Node(data);
+      node = new Node(data);
+      return node;
     }
 
     if (data === node.data) {
       return node;
     } else if (data < node.data) {
-      node.left = this.insert(node.left, data);
+      node.left = this.insert(data, node.left);
     } else if (data > node.data) {
-      node.right = this.insert(node.right, data);
+      node.right = this.insert(data, node.right);
     }
 
     return node;
@@ -72,17 +70,17 @@ export default class Tree {
   }
 
   // Delete node from tree
-  delete(root, k) {
+  delete(k, root = this.root) {
     if (root === null) {
       return root;
     }
 
     // Recursive calls for the ancestors of the node to be deleted
     if (root.data > k) {
-      root.left = this.delete(root.left, k);
+      root.left = this.delete(k, root.left);
       return root;
     } else if (root.data < k) {
-      root.right = this.delete(root.right, k);
+      root.right = this.delete(k, root.right);
       return root;
     }
 
@@ -125,6 +123,18 @@ export default class Tree {
       root.data = successor.data;
       successor = null;
       return root;
+    }
+  }
+
+  find(value, root = this.root) {
+    if (root === null || root.data === value) {
+      return root;
+    }
+
+    if (root.data < value) {
+      return this.find(value, root.right);
+    } else if (root.data > value) {
+      return this.find(value, root.left);
     }
   }
 }

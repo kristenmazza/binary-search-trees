@@ -2,12 +2,21 @@ import Tree from "./tree.js";
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree(arr);
-const root = tree.buildTree();
 
-tree.prettyPrint(root);
+// Create a visual tree in a structured format
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
 
-tree.insert(root, 10);
-tree.prettyPrint(root);
-
-tree.delete(root, 67);
-tree.prettyPrint(root);
+prettyPrint(tree.root);
+tree.insert(10);
+prettyPrint(tree.root);
+tree.delete(67);
+prettyPrint(tree.root);
+console.log(tree.find(324));
