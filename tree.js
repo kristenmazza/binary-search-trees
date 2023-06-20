@@ -60,15 +60,6 @@ export default class Tree {
     return node;
   }
 
-  // Inorder traversal of BST
-  inorder(root) {
-    if (root !== null) {
-      this.inorder(root.left);
-      console.log(root.data);
-      this.inorder(root.right);
-    }
-  }
-
   // Delete node from tree
   delete(k, root = this.root) {
     if (root === null) {
@@ -172,5 +163,48 @@ export default class Tree {
     if (!callback) {
       return levelOrderArray;
     }
+  }
+
+  // Inorder traversal of BST: <left><root><right>
+  // Accepts a function as a parameter.Returns array if no function is given.
+  inorder(callback, root = this.root, inorderArray = []) {
+    if (root === null) return;
+
+    this.inorder(callback, root.left, inorderArray);
+
+    if (callback) callback(root);
+    inorderArray.push(root.data);
+
+    this.inorder(callback, root.right, inorderArray);
+
+    if (!callback) return inorderArray;
+  }
+
+  // Preorder traversal of BST: <root><left><right>
+  // Accepts a function as a parameter.Returns array if no function is given.
+  preorder(callback, root = this.root, preorderArray = []) {
+    if (root === null) return;
+
+    if (callback) callback(root);
+    preorderArray.push(root.data);
+
+    this.preorder(callback, root.left, preorderArray);
+    this.preorder(callback, root.right, preorderArray);
+
+    if (!callback) return preorderArray;
+  }
+
+  // Postorder traversal of BST: <left><right><root>
+  // Accepts a function as a parameter.Returns array if no function is given.
+  postorder(callback, root = this.root, postorderArray = []) {
+    if (root === null) return;
+
+    this.postorder(callback, root.left, postorderArray);
+    this.postorder(callback, root.right, postorderArray);
+
+    if (callback) callback(root);
+    postorderArray.push(root.data);
+
+    if (!callback) return postorderArray;
   }
 }

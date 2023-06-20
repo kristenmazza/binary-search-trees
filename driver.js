@@ -20,4 +20,7 @@ prettyPrint(tree.root);
 // tree.delete(67);
 // prettyPrint(tree.root);
 // console.log(tree.find(324));
-console.log(tree.levelOrder());
+// console.log(tree.levelOrder());
+// console.log(tree.inorder());
+// console.log(tree.preorder());
+console.log(tree.postorder());
