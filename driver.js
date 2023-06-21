@@ -25,3 +25,4 @@ prettyPrint(tree.root);
 // console.log(tree.preorder(tree.externalFunction));
 console.log(tree.postorder(tree.externalFunction));
 console.log(tree.depth(1));
+console.log(tree.height(1));

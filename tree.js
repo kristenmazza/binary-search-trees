@@ -216,6 +216,32 @@ export default class Tree {
     return postorderArray;
   }
 
+  // Accepts node and returns its height (number of edges in longest path from given node to leaf node)
+  height(node, root = this.root) {
+    let currentNode = this.find(node);
+    let leftHeight = 0;
+    let rightHeight = 0;
+
+    if (!currentNode) return null;
+
+    while (currentNode.left !== null) {
+      currentNode = currentNode.left;
+      leftHeight += 1;
+    }
+
+    currentNode = this.find(node);
+    while (currentNode.right !== null) {
+      currentNode = currentNode.right;
+      rightHeight += 1;
+    }
+
+    if (leftHeight > rightHeight) {
+      return leftHeight;
+    } else {
+      return rightHeight;
+    }
+  }
+
   // Accepts node and returns its depth (number of edges in path from given node to tree's root node)
   depth(node, root = this.root) {
     let depth = 0;
