@@ -1,5 +1,4 @@
 import Node from "./node.js";
-import { tree } from "./driver.js";
 
 export default class Tree {
   constructor(arr) {
