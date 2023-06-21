@@ -1,4 +1,5 @@
 import Node from "./node.js";
+import { tree } from "./driver.js";
 
 export default class Tree {
   constructor(arr) {
@@ -317,8 +318,11 @@ export default class Tree {
     return false;
   }
 
+  // Rebalance an unbalanced tree
   rebalance() {
-    if (!this.isBalanced) {
-    }
+    if (this.isBalanced()) return;
+
+    const newArray = this.inorder();
+    this.root = this.buildTree(newArray);
   }
 }

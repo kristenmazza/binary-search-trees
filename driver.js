@@ -14,7 +14,7 @@ function randomNumbers(n) {
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 // const arr = randomNumbers(17);
-const tree = new Tree(arr);
+export let tree = new Tree(arr);
 
 // Create a visual tree in a structured format
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -46,3 +46,6 @@ tree.insert(1443);
 tree.insert(1000);
 prettyPrint(tree.root);
 console.log(tree.isBalanced());
+tree.rebalance();
+console.log(tree.isBalanced());
+prettyPrint(tree.root);
