@@ -130,6 +130,7 @@ export default class Tree {
     }
   }
 
+  // Test function to be used as a callback
   externalFunction(node) {
     return node.data * node.data;
   }
@@ -281,6 +282,43 @@ export default class Tree {
       return null;
     } else {
       return depth;
+    }
+  }
+
+  // Checks whether the tree is balanced (difference between heights of
+  // left subtree and right subtree of each ndoe is not more than 1)
+  isBalanced(root = this.root) {
+    let leftHeight;
+    let rightHeight;
+
+    if (!root) {
+      return true;
+    }
+
+    if (root.left) {
+      leftHeight = this.height(root.left.data);
+    } else {
+      leftHeight = -1;
+    }
+
+    if (root.right) {
+      rightHeight = this.height(root.right.data);
+    } else {
+      rightHeight = -1;
+    }
+
+    if (
+      Math.abs(leftHeight - rightHeight) <= 1 &&
+      this.isBalanced(root.left) &&
+      this.isBalanced(root.right)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  rebalance() {
+    if (!this.isBalanced) {
     }
   }
 }
